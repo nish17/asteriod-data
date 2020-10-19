@@ -1,24 +1,24 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 
+import { getTodaysData } from './api';
+
 function App() {
+  const [APIData, setAPIData] = useState({});
+
+  useEffect(() => {
+    async function getData() {
+      const response = await getTodaysData();
+      const dateKey = Object.keys(response.near_earth_objects)[0];
+      setAPIData(response.near_earth_objects[dateKey]);
+    }
+    getData();
+  },[]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='App'>
+        Asteriod Data
+      {APIData.length > 0 && APIData.map((data,i) => <div key={i}>{data['name']}</div>)}
     </div>
   );
 }
