@@ -12,10 +12,13 @@ import DoneIcon from '@material-ui/icons/Done';
 import Typography from '@material-ui/core/Typography';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+
 const useStyles = makeStyles((theme) =>
   createStyles({
     root: {
       maxWidth: 345,
+      margin: '5%',
+      padding: '2%'
     },
     media: {
       height: 0,
