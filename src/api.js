@@ -14,3 +14,17 @@ export async function getTodaysData() {
     console.log('Error in fetching data from API.');
   }
 }
+
+export async function getAsteroidByID(id) {
+  const URL = `https://api.nasa.gov/neo/rest/v1/neo/${id}`;
+  try {
+    const response = await axios.get(URL, {
+      params: {
+        api_key: process.env.REACT_APP_API_KEY,
+      },
+    });
+    return response.data;
+  } catch (e) {
+    console.log('Error in fetching data from API.');
+  }
+}
