@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/styles';
 
 import { getTodaysData } from '../api';
 import AstroCard from './AstroCard';
+import { Grid } from '@material-ui/core';
 
 const useStyles = makeStyles(() => ({
   'dashboard-pos': {
@@ -26,8 +27,14 @@ export default function Dashboard(props) {
 
   return (
     <div className={classes['dashboard-pos']}>
-      {APIData.length > 0 &&
-        APIData.map((data, i) => <AstroCard key={i} data={data} />)}
+      <Grid container>
+        {APIData.length > 0 &&
+          APIData.map((data, i) => (
+            <Grid item xs={4}>
+              <AstroCard key={i} data={data} />
+            </Grid>
+          ))}
+      </Grid>
     </div>
   );
 }
