@@ -16,27 +16,32 @@ const useStyles = makeStyles(() => ({
 }));
 export default function Dashboard(props) {
   const classes = useStyles();
-  const [APIData, setAPIData] = useState({});
+  const [APIData, setAPIData] = useState([]);
+  const [isSearchResult, setIsSearchResult] = useState(false);
+  const [asteroidData, setAsteroidData] = useState({});
   const [searchTerm, setSearchTerm] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    if(isSearchResult) return;
     async function getData() {
       setIsLoading(true);
       const response = await getTodaysData();
       const dateKey = Object.keys(response.near_earth_objects)[0];
+      setIsSearchResult(false);
       setAPIData(response.near_earth_objects[dateKey]);
       setIsLoading(false);
     }
     getData();
-  }, []);
+  }, [isSearchResult]);
 
   useEffect(() => {
     if (!searchTerm) return;
     async function getSpecificAsteroid() {
+      setIsSearchResult(true);
       setIsLoading(true);
       const response = await getAsteroidByID(searchTerm);
-      setAPIData(response);
+      setAsteroidData(response);
       setIsLoading(false);
     }
     getSpecificAsteroid();
@@ -46,13 +51,17 @@ export default function Dashboard(props) {
     <div className={classes['dashboard-pos']}>
       <Searchbar submitSearch={setSearchTerm} />
       <Grid container>
-        {!isLoading &&
+        {(!isLoading && !isSearchResult) &&
           APIData.map((data, i) => (
-            <Grid item xs={4}>
-              <AstroCard key={i} data={data} />
+            <Grid key={i} item xs={4}>
+              <AstroCard data={data} />
             </Grid>
           ))}
         {isLoading && <div>Loading... Please wait</div>}
+        {(isSearchResult && !isLoading) &&<Grid item >
+          <div>SelectedID: {searchTerm}</div>
+            <AstroCard key="123" data={asteroidData} />
+          </Grid>}
       </Grid>
     </div>
   );
