@@ -28,7 +28,6 @@ export default function Searchbar({ submitSearch }) {
         onSubmit={handleSubmit}
       >
         <Input
-          defaultValue='Input the asteroid ID over here...'
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
