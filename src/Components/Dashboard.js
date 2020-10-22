@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/styles';
 import { Grid, CircularProgress } from '@material-ui/core';
 
 import { getTodaysData, getAsteroidByID } from '../api';
+import { addIsMarkedProp } from '../utils';
 import AstroCard from './AstroCard';
 import Searchbar from './SearchBar';
 
@@ -14,7 +15,7 @@ const useStyles = makeStyles(() => ({
     left: '20px',
   },
 }));
-export default function Dashboard(props) {
+export default function Dashboard() {
   const classes = useStyles();
   const [APIData, setAPIData] = useState([]);
   const [isSearchResult, setIsSearchResult] = useState(false);
@@ -28,8 +29,11 @@ export default function Dashboard(props) {
       setIsLoading(true);
       const response = await getTodaysData();
       const dateKey = Object.keys(response.near_earth_objects)[0];
+      const dataWithIsMarkedProp = addIsMarkedProp(
+        response.near_earth_objects[dateKey]
+      );
       setIsSearchResult(false);
-      setAPIData(response.near_earth_objects[dateKey]);
+      setAPIData(dataWithIsMarkedProp);
       setIsLoading(false);
     }
     getData();
