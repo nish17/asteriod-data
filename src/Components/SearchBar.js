@@ -29,6 +29,7 @@ export default function Searchbar({ submitSearch }) {
       >
         <Input
           value={searchTerm}
+          placeholder="search by ID"
           onChange={(e) => setSearchTerm(e.target.value)}
         />
       </form>
