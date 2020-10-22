@@ -1,5 +1,6 @@
 import React from 'react';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
+
 import {
   Card,
   CardHeader,
@@ -8,7 +9,9 @@ import {
   IconButton,
   Typography,
 } from '@material-ui/core';
-import { ClearIcon, DoneIcon, FavoriteIcon } from '@material-ui/icons';
+import ClearIcon from '@material-ui/icons/Clear';
+import DoneIcon from '@material-ui/icons/Done';
+import FavoriteIcon from '@material-ui/icons/Favorite';
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -36,7 +39,6 @@ const useStyles = makeStyles((theme) =>
 
 export default function AstroCard({ data }) {
   const classes = useStyles();
-  const [expanded, setExpanded] = React.useState(false);
 
   const {
     id,
