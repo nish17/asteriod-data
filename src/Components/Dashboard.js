@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/styles';
-import { Grid } from '@material-ui/core';
+import { Grid, CircularProgress } from '@material-ui/core';
 
 import { getTodaysData, getAsteroidByID } from '../api';
 import AstroCard from './AstroCard';
@@ -23,7 +23,7 @@ export default function Dashboard(props) {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    if(isSearchResult) return;
+    if (isSearchResult) return;
     async function getData() {
       setIsLoading(true);
       const response = await getTodaysData();
@@ -51,17 +51,24 @@ export default function Dashboard(props) {
     <div className={classes['dashboard-pos']}>
       <Searchbar submitSearch={setSearchTerm} />
       <Grid container>
-        {(!isLoading && !isSearchResult) &&
+        {!isLoading &&
+          !isSearchResult &&
           APIData.map((data, i) => (
             <Grid key={i} item xs={4}>
               <AstroCard data={data} />
             </Grid>
           ))}
-        {isLoading && <div>Loading... Please wait</div>}
-        {(isSearchResult && !isLoading) &&<Grid item >
-          <div>SelectedID: {searchTerm}</div>
-            <AstroCard key="123" data={asteroidData} />
-          </Grid>}
+        {isLoading && (
+          <div className='spinner'>
+            <CircularProgress />
+          </div>
+        )}
+        {isSearchResult && !isLoading && (
+          <Grid item>
+            <div>SelectedID: {searchTerm}</div>
+            <AstroCard key='123' data={asteroidData} />
+          </Grid>
+        )}
       </Grid>
     </div>
   );
