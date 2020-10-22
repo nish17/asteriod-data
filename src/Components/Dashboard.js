@@ -51,9 +51,11 @@ export default function Dashboard() {
     getSpecificAsteroid();
   }, [searchTerm]);
 
+
+
   return (
     <div className={classes['dashboard-pos']}>
-      <Searchbar submitSearch={setSearchTerm} />
+      <Searchbar submitSearch={setSearchTerm} clearInput={setIsSearchResult} />
       <Grid container>
         {!isLoading &&
           !isSearchResult &&

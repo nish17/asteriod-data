@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
+
 import { makeStyles } from '@material-ui/core/styles';
 import Input from '@material-ui/core/Input';
-
+import ClearIcon from '@material-ui/icons/Clear';
 const useStyles = makeStyles((theme) => ({
   root: {
     '& > *': {
@@ -10,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
-export default function Searchbar({ submitSearch }) {
+export default function Searchbar({ submitSearch, clearInput }) {
   const classes = useStyles();
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -19,6 +20,14 @@ export default function Searchbar({ submitSearch }) {
     submitSearch(searchTerm);
   };
 
+  const handleOnFocus = (e) => {
+    console.log('focused on input');
+    
+  };
+  const handleClearIconClick = () => {
+    clearInput(false);
+    setSearchTerm('') 
+  }
   return (
     <div>
       <form
@@ -29,9 +38,10 @@ export default function Searchbar({ submitSearch }) {
       >
         <Input
           value={searchTerm}
-          placeholder="search by ID"
+          placeholder='search by ID'
           onChange={(e) => setSearchTerm(e.target.value)}
-        />
+          onFocus={handleOnFocus}
+        /> <ClearIcon onClick={handleClearIconClick}/>
       </form>
     </div>
   );
