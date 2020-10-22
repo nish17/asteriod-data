@@ -12,6 +12,7 @@ import {
 import ClearIcon from '@material-ui/icons/Clear';
 import DoneIcon from '@material-ui/icons/Done';
 import FavoriteIcon from '@material-ui/icons/Favorite';
+import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -46,6 +47,7 @@ export default function AstroCard({ data }) {
     nasa_jpl_url,
     is_potentially_hazardous_asteroid,
     estimated_diameter,
+    isMarked
   } = data;
   const { feet } = estimated_diameter;
   const avg_diameter =
@@ -67,7 +69,7 @@ export default function AstroCard({ data }) {
       </CardContent>
       <CardActions disableSpacing>
         <IconButton aria-label='add to favorites'>
-          <FavoriteIcon />
+          {isMarked? <FavoriteIcon />: <FavoriteBorderIcon />}
         </IconButton>
       </CardActions>
     </Card>
