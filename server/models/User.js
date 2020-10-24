@@ -5,20 +5,37 @@ const UserSchema = new Schema(
   {
     name: {
       type: String,
+      required: true,
     },
     email: {
       type: String,
+      unique: true,
+      required: true,
     },
     password: {
       type: String,
+      required: true,
     },
-    favAsteroids: [{
-      type: String
-    }]
+    hash: {
+      type: String,
+      required: true,
+    },
+    favAsteroids: [
+      {
+        type: String,
+      },
+    ],
   },
   { timestamps: true }
 );
 
-const User = mongoose.model('User', UserSchema);
+schema.set('toJSON', {
+  virtuals: true,
+  versionKey: false,
+  transform: function (doc, ret) {
+    delete ret._id;
+    delete ret.hash;
+  },
+});
 
-module.exports = User;
+module.exports = mongoose.model('User', UserSchema);
