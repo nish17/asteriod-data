@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 
-const URL = 'mongodb://localhost:27017/userdb';
+const config = require('../config.json');
 
-mongoose.connect(URL, {
+mongoose.connect(config.connectionString, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });
